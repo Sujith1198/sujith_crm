@@ -1,0 +1,17 @@
+[33m>[39m Building...
+[32m√[39m Building...
+[37mApplication bundle generation failed. [1.255 seconds][39m
+[37m[39m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mAngular compilation initialization failed.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m  Error: The Angular Compiler requires TypeScript >=5.8.0 and <5.9.0 but 5.5.4 was found instead.[39m[22m
+[1m[31m      at checkVersion (file:///C:/Users/RedMind%2004/Documents/top_ten_CRM/frontend/node_modules/@angular/compiler-cli/bundles/chunk-M367SQSJ.js:1187:11)[39m[22m
+[1m[31m      at verifySupportedTypeScriptVersion (file:///C:/Users/RedMind%2004/Documents/top_ten_CRM/frontend/node_modules/@angular/compiler-cli/bundles/chunk-M367SQSJ.js:1191:3)[39m[22m
+[1m[31m      at new NgtscProgram (file:///C:/Users/RedMind%2004/Documents/top_ten_CRM/frontend/node_modules/@angular/compiler-cli/bundles/chunk-M367SQSJ.js:4699:7)[39m[22m
+[1m[31m      at C:\Users\RedMind 04\Documents\top_ten_CRM\frontend\node_modules\@angular\build\src\tools\angular\compilation\aot-compilation.js:96:88[39m[22m
+[1m[31m      at profileSync (C:\Users\RedMind 04\Documents\top_ten_CRM\frontend\node_modules\@angular\build\src\tools\esbuild\profiling.js:68:16)[39m[22m
+[1m[31m      at AotCompilation.initialize (C:\Users\RedMind 04\Documents\top_ten_CRM\frontend\node_modules\@angular\build\src\tools\angular\compilation\aot-compilation.js:96:60)[39m[22m
+[1m[31m      at async initialize (C:\Users\RedMind 04\Documents\top_ten_CRM\frontend\node_modules\@angular\build\src\tools\angular\compilation\parallel-worker.js:38:88)[39m[22m
+[1m[31m      at async onMessage (C:\Users\RedMind 04\Documents\top_ten_CRM\frontend\node_modules\piscina\dist\worker.js:180:22)[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m

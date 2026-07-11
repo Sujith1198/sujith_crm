@@ -1,0 +1,200 @@
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h2 style="font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:2px;">Social Accounts</h2>
+    <p style="font-size:13px;color:var(--text-muted);margin:0;">Connect and manage your social media accounts</p>
+  </div>
+  <button class="btn btn-primary" (click)="connectFacebook()" [disabled]="connecting()">
+    @if (connecting()) {
+      <span class="spinner-border spinner-border-sm me-2"></span> Connecting...
+    } @else {
+      <i class="bi bi-facebook me-2"></i> Connect Facebook
+    }
+  </button>
+</div>
+
+@if (loading()) {
+  <div class="row g-3">
+    @for (i of [1,2,3]; track i) {
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="skeleton" style="height:160px;border-radius:14px;"></div>
+      </div>
+    }
+  </div>
+} @else {
+
+  <!-- ── Facebook ──────────────────────── -->
+  <div class="mb-4">
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <i class="bi bi-facebook" style="font-size:20px;color:#1877f2;"></i>
+      <h5 style="font-weight:700;color:var(--text-primary);margin:0;">Facebook Pages</h5>
+      <span style="font-size:12px;color:var(--text-muted);">({{ fbAccounts().length }} connected)</span>
+    </div>
+
+    @if (fbAccounts().length === 0) {
+      <div class="card" style="border-radius:14px;border:2px dashed var(--border-color);">
+        <div class="card-body text-center py-5">
+          <i class="bi bi-facebook" style="font-size:48px;color:#1877f2;opacity:.4;"></i>
+          <div style="font-weight:600;color:var(--text-secondary);margin-top:12px;">No Facebook Pages connected</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+            Click "Connect Facebook" to link your Facebook Pages
+          </div>
+          <button class="btn btn-primary mt-3" (click)="connectFacebook()">
+            <i class="bi bi-facebook me-2"></i> Connect Now
+          </button>
+        </div>
+      </div>
+    } @else {
+      <div class="row g-3">
+        @for (account of fbAccounts(); track account.id) {
+          <div class="col-12 col-md-6 col-xl-4">
+            <div class="card" style="border-radius:14px;">
+              <div class="card-body">
+                <div class="d-flex align-items-start gap-3 mb-3">
+                  @if (account.profile_picture_url) {
+                    <img [src]="account.profile_picture_url" style="width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+                  } @else {
+                    <div style="width:48px;height:48px;border-radius:50%;background:#1877f2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                      <i class="bi bi-facebook text-white" style="font-size:22px;"></i>
+                    </div>
+                  }
+                  <div class="flex-1">
+                    <div style="font-weight:700;font-size:14px;color:var(--text-primary);">{{ account.account_name }}</div>
+                    <div style="font-size:11px;color:var(--text-muted);">Facebook Page</div>
+                    <div class="mt-1">
+                      <span class="badge-status" [class.badge-active]="account.is_active" [class.badge-inactive]="!account.is_active">
+                        {{ account.is_active ? 'Active' : 'Inactive' }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Stats row -->
+                <div class="d-flex gap-3 mb-3 p-2" style="background:var(--bg-body);border-radius:8px;">
+                  <div class="text-center flex-1">
+                    <div style="font-weight:700;font-size:14px;color:#1877f2;">{{ account.followers_count | number }}</div>
+                    <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;">Followers</div>
+                  </div>
+                  <div class="text-center flex-1">
+                    <div style="font-size:12px;font-weight:600;color:var(--text-secondary);">{{ formatDate(account.token_expires_at) }}</div>
+                    <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;">Token Expires</div>
+                  </div>
+                </div>
+
+                @if (account.token_expiring_soon) {
+                  <div class="alert py-2 px-3 mb-3" style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:8px;font-size:12px;color:#d97706;">
+                    <i class="bi bi-exclamation-triangle me-1"></i> Token expiring soon
+                  </div>
+                }
+                @if (account.token_expired) {
+                  <div class="alert py-2 px-3 mb-3" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;font-size:12px;color:#dc2626;">
+                    <i class="bi bi-x-circle me-1"></i> Token expired — reconnect required
+                  </div>
+                }
+
+                <!-- Actions -->
+                <div class="d-flex gap-2">
+                  @if (account.token_expired || account.token_expiring_soon) {
+                    <button class="btn btn-warning btn-sm flex-1" (click)="reconnect(account)">
+                      <i class="bi bi-arrow-clockwise"></i> Reconnect
+                    </button>
+                  }
+                  <!-- Connect Instagram button (if FB is active) -->
+                  @if (account.is_active) {
+                    <button class="btn btn-sm flex-1"
+                            style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:white;"
+                            (click)="connectInstagram(account.id)">
+                      <i class="bi bi-instagram"></i> Link IG
+                    </button>
+                  }
+                  <button class="btn btn-outline-danger btn-sm"
+                          (click)="disconnect(account)"
+                          [disabled]="disconnecting() === account.id"
+                          title="Disconnect">
+                    @if (disconnecting() === account.id) {
+                      <span class="spinner-border spinner-border-sm"></span>
+                    } @else {
+                      <i class="bi bi-plug"></i>
+                    }
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- ── Instagram ─────────────────────── -->
+  <div>
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <i class="bi bi-instagram" style="font-size:20px;color:#e1306c;"></i>
+      <h5 style="font-weight:700;color:var(--text-primary);margin:0;">Instagram Business Accounts</h5>
+      <span style="font-size:12px;color:var(--text-muted);">({{ igAccounts().length }} connected)</span>
+    </div>
+
+    @if (igAccounts().length === 0) {
+      <div class="card" style="border-radius:14px;border:2px dashed var(--border-color);">
+        <div class="card-body text-center py-5">
+          <i class="bi bi-instagram" style="font-size:48px;color:#e1306c;opacity:.4;"></i>
+          <div style="font-weight:600;color:var(--text-secondary);margin-top:12px;">No Instagram accounts connected</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+            First connect a Facebook Page, then click "Link IG" to attach your Instagram Business Account
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="row g-3">
+        @for (account of igAccounts(); track account.id) {
+          <div class="col-12 col-md-6 col-xl-4">
+            <div class="card" style="border-radius:14px;border-top:3px solid #e1306c;">
+              <div class="card-body">
+                <div class="d-flex align-items-start gap-3 mb-3">
+                  @if (account.profile_picture_url) {
+                    <img [src]="account.profile_picture_url" style="width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+                  } @else {
+                    <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                      <i class="bi bi-instagram text-white" style="font-size:22px;"></i>
+                    </div>
+                  }
+                  <div>
+                    <div style="font-weight:700;font-size:14px;color:var(--text-primary);">{{ account.account_name }}</div>
+                    @if (account.page_name) {
+                      <div style="font-size:11px;color:#e1306c;">&#64;{{ account.page_name }}</div>
+                    }
+                    <span class="badge-status" [class.badge-active]="account.is_active" [class.badge-inactive]="!account.is_active" style="margin-top:4px;">
+                      {{ account.is_active ? 'Active' : 'Inactive' }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="d-flex gap-3 mb-3 p-2" style="background:var(--bg-body);border-radius:8px;">
+                  <div class="text-center flex-1">
+                    <div style="font-weight:700;font-size:14px;color:#e1306c;">{{ account.followers_count | number }}</div>
+                    <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;">Followers</div>
+                  </div>
+                  <div class="text-center flex-1">
+                    <div style="font-size:12px;font-weight:600;color:var(--text-secondary);">{{ account.last_synced_at ? (account.last_synced_at | date:'MMM d HH:mm') : 'Never' }}</div>
+                    <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;">Last Synced</div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-outline-danger btn-sm"
+                          (click)="disconnect(account)"
+                          [disabled]="disconnecting() === account.id">
+                    @if (disconnecting() === account.id) {
+                      <span class="spinner-border spinner-border-sm"></span>
+                    } @else {
+                      <i class="bi bi-plug me-1"></i> Disconnect
+                    }
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

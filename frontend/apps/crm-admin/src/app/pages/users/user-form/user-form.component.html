@@ -1,0 +1,163 @@
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h2 style="font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:2px;">
+      {{ isEdit ? 'Edit User' : 'Create User' }}
+    </h2>
+    <p style="font-size:13px;color:var(--text-muted);margin:0;">
+      {{ isEdit ? 'Update user information and permissions' : 'Add a new team member to the system' }}
+    </p>
+  </div>
+  <a routerLink="/users" class="btn btn-outline-primary btn-sm">
+    <i class="bi bi-arrow-left"></i> Back
+  </a>
+</div>
+
+@if (loading()) {
+  <div class="d-flex align-items-center justify-content-center" style="min-height:300px;">
+    <div class="spinner-border" style="color:var(--crm-primary);"></div>
+  </div>
+} @else {
+  <div class="row g-4">
+    <div class="col-12 col-lg-8">
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="card" style="border-radius:14px;">
+          <div class="card-header">User Information</div>
+          <div class="card-body">
+            <div class="row g-3">
+              <!-- Name -->
+              <div class="col-12 col-md-6">
+                <label class="form-label">Full Name <span class="text-danger">*</span></label>
+                <input type="text" id="user-name" formControlName="name" class="form-control"
+                       placeholder="John Doe"
+                       [class.is-invalid]="name.invalid && name.touched">
+                @if (name.hasError('required') && name.touched) {
+                  <div class="invalid-feedback">Name is required.</div>
+                }
+              </div>
+
+              <!-- Email -->
+              <div class="col-12 col-md-6">
+                <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                <input type="email" id="user-email" formControlName="email" class="form-control"
+                       placeholder="john@example.com"
+                       [class.is-invalid]="email.invalid && email.touched">
+                @if (email.hasError('required') && email.touched) {
+                  <div class="invalid-feedback">Email is required.</div>
+                } @else if (email.hasError('email') && email.touched) {
+                  <div class="invalid-feedback">Enter a valid email.</div>
+                }
+              </div>
+
+              <!-- Phone -->
+              <div class="col-12 col-md-6">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" id="user-phone" formControlName="phone" class="form-control"
+                       placeholder="+1 234 567 8900">
+              </div>
+
+              <!-- Timezone -->
+              <div class="col-12 col-md-6">
+                <label class="form-label">Timezone</label>
+                <select formControlName="timezone" id="user-timezone" class="form-select">
+                  @for (tz of timezones; track tz) {
+                    <option [value]="tz">{{ tz }}</option>
+                  }
+                </select>
+              </div>
+
+              <!-- Role -->
+              <div class="col-12 col-md-6">
+                <label class="form-label">Role <span class="text-danger">*</span></label>
+                <select formControlName="role" id="user-role" class="form-select">
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+
+              <!-- Status -->
+              <div class="col-12 col-md-6">
+                <label class="form-label">Status <span class="text-danger">*</span></label>
+                <select formControlName="status" id="user-status" class="form-select">
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="suspended">Suspended</option>
+                </select>
+              </div>
+
+              <!-- Password -->
+              <div class="col-12 col-md-6">
+                <label class="form-label">
+                  Password
+                  @if (!isEdit) { <span class="text-danger">*</span> }
+                  @if (isEdit) { <span style="font-size:11px;color:var(--text-muted);font-weight:400;">(Leave blank to keep current)</span> }
+                </label>
+                <div class="input-group">
+                  <input [type]="showPassword() ? 'text' : 'password'"
+                         id="user-password"
+                         formControlName="password"
+                         class="form-control"
+                         placeholder="Min. 8 characters"
+                         [class.is-invalid]="password.invalid && password.touched">
+                  <button type="button" class="input-group-text" (click)="showPassword.set(!showPassword())"
+                          style="background:var(--bg-body);border:1.5px solid var(--border-color);cursor:pointer;">
+                    <i class="bi" [class.bi-eye]="!showPassword()" [class.bi-eye-slash]="showPassword()"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="col-12 col-md-6">
+                <label class="form-label">Confirm Password</label>
+                <input [type]="showPassword() ? 'text' : 'password'"
+                       id="user-password-confirm"
+                       formControlName="password_confirmation"
+                       class="form-control"
+                       placeholder="Repeat password">
+              </div>
+            </div>
+          </div>
+          <div class="card-body border-top pt-3 d-flex gap-3">
+            <button type="submit" id="btn-save-user" class="btn btn-primary" style="min-width:140px;" [disabled]="submitting()">
+              @if (submitting()) {
+                <span class="spinner-border spinner-border-sm me-2"></span>Saving...
+              } @else {
+                <i class="bi bi-check2"></i> {{ isEdit ? 'Update User' : 'Create User' }}
+              }
+            </button>
+            <a routerLink="/users" class="btn btn-outline-primary">Cancel</a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Side Tips -->
+    <div class="col-12 col-lg-4">
+      <div class="card" style="border-radius:14px;background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.2);">
+        <div class="card-body">
+          <h6 style="font-weight:700;color:var(--crm-primary);margin-bottom:12px;">
+            <i class="bi bi-info-circle me-2"></i>Role Permissions
+          </h6>
+          <div class="mb-3">
+            <div class="badge-status badge-admin mb-2">Admin</div>
+            <ul style="font-size:12px;color:var(--text-secondary);margin:0;padding-left:16px;">
+              <li>Full system access</li>
+              <li>Manage all users</li>
+              <li>View all posts & analytics</li>
+              <li>Export reports</li>
+              <li>Manage settings</li>
+            </ul>
+          </div>
+          <div>
+            <div class="badge-status badge-user mb-2">User</div>
+            <ul style="font-size:12px;color:var(--text-secondary);margin:0;padding-left:16px;">
+              <li>Create & manage own posts</li>
+              <li>View own analytics</li>
+              <li>Connect social accounts</li>
+              <li>Schedule posts</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

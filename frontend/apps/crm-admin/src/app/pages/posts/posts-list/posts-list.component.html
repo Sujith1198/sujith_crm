@@ -1,0 +1,220 @@
+<!-- Header -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h2 style="font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:2px;">Posts</h2>
+    @if (meta()) {
+      <p style="font-size:13px;color:var(--text-muted);margin:0;">{{ meta()!.total }} posts total</p>
+    }
+  </div>
+  <a routerLink="/posts/create" class="btn btn-primary">
+    <i class="bi bi-plus-lg"></i> Create Post
+  </a>
+</div>
+
+<!-- Filters -->
+<div class="card mb-4" style="border-radius:14px;">
+  <div class="card-body p-3">
+    <div class="row g-2 align-items-center">
+      <div class="col-12 col-md-4">
+        <div class="input-group">
+          <span class="input-group-text" style="background:var(--bg-body);border:1.5px solid var(--border-color);">
+            <i class="bi bi-search" style="color:var(--text-muted);"></i>
+          </span>
+          <input type="text"
+                 id="post-search"
+                 class="form-control"
+                 placeholder="Search posts..."
+                 [(ngModel)]="filters.search"
+                 (input)="onSearch()">
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <select class="form-select" [(ngModel)]="filters.status" (change)="onFilterChange()" id="filter-status">
+          <option value="">All Status</option>
+          @for (s of statusOpts; track s) {
+            <option [value]="s">{{ s | titlecase }}</option>
+          }
+        </select>
+      </div>
+      <div class="col-6 col-md-2">
+        <select class="form-select" [(ngModel)]="filters.platform" (change)="onFilterChange()" id="filter-platform">
+          <option value="">All Platforms</option>
+          @for (p of platformOpts; track p) {
+            <option [value]="p">{{ p | titlecase }}</option>
+          }
+        </select>
+      </div>
+      <div class="col-6 col-md-2">
+        <select class="form-select" [(ngModel)]="filters.per_page" (change)="onFilterChange()" id="filter-per-page">
+          <option [value]="10">10 per page</option>
+          <option [value]="15">15 per page</option>
+          <option [value]="25">25 per page</option>
+          <option [value]="50">50 per page</option>
+        </select>
+      </div>
+      <div class="col-6 col-md-2">
+        <button class="btn btn-outline-primary w-100" (click)="clearFilters()">
+          <i class="bi bi-x-circle"></i> Clear
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="card" style="border-radius:14px;overflow:hidden;">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Platforms</th>
+          <th>Type</th>
+          <th>Scheduled</th>
+          @if (isAdmin) { <th>Author</th> }
+          <th>Created</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (loading()) {
+          @for (i of [1,2,3,4,5,6,7,8]; track i) {
+            <tr>
+              @for (c of [1,2,3,4,5,6,7]; track c) {
+                <td><div class="skeleton" style="height:16px;border-radius:4px;"></div></td>
+              }
+            </tr>
+          }
+        } @else if (posts().length === 0) {
+          <tr>
+            <td colspan="9">
+              <div class="empty-state py-5">
+                <div class="empty-state-icon">📝</div>
+                <div class="empty-state-title">No posts found</div>
+                <div class="empty-state-subtitle">Create your first post to get started</div>
+                <a routerLink="/posts/create" class="btn btn-primary mt-3 btn-sm">
+                  <i class="bi bi-plus"></i> Create Post
+                </a>
+              </div>
+            </td>
+          </tr>
+        } @else {
+          @for (post of posts(); track post.id; let i = $index) {
+            <tr>
+              <td style="color:var(--text-muted);font-size:12px;">
+                {{ ((meta()?.current_page ?? 1) - 1) * (filters.per_page ?? 15) + i + 1 }}
+              </td>
+              <td>
+                <div class="d-flex align-items-center gap-3">
+                  @if (post.thumbnail_url) {
+                    <img [src]="post.thumbnail_url"
+                         style="width:40px;height:40px;object-fit:cover;border-radius:8px;flex-shrink:0;"
+                         [alt]="post.title">
+                  } @else {
+                    <div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);
+                                 display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                      <i class="bi bi-file-post text-white" style="font-size:16px;"></i>
+                    </div>
+                  }
+                  <div>
+                    <div style="font-weight:600;font-size:13px;color:var(--text-primary);">
+                      {{ post.title | slice:0:45 }}{{ post.title.length > 45 ? '…' : '' }}
+                    </div>
+                    @if (post.caption) {
+                      <div style="font-size:11px;color:var(--text-muted);">
+                        {{ post.caption | slice:0:60 }}{{ post.caption!.length > 60 ? '…' : '' }}
+                      </div>
+                    }
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span class="badge-status badge-{{ post.status }}">{{ post.status }}</span>
+              </td>
+              <td>
+                <div class="d-flex gap-1">
+                  @if (post.post_to_facebook) {
+                    <span class="badge-status badge-facebook" style="font-size:10px;"><i class="bi bi-facebook"></i> FB</span>
+                  }
+                  @if (post.post_to_instagram) {
+                    <span class="badge-status badge-instagram" style="font-size:10px;"><i class="bi bi-instagram"></i> IG</span>
+                  }
+                </div>
+              </td>
+              <td>
+                <span style="font-size:12px;color:var(--text-secondary);text-transform:capitalize;">{{ post.post_type }}</span>
+              </td>
+              <td>
+                @if (post.publish_at) {
+                  <span style="font-size:12px;color:var(--text-secondary);">
+                    {{ post.publish_at | date:'MMM d, y HH:mm' }}
+                  </span>
+                } @else {
+                  <span style="font-size:12px;color:var(--text-muted);">—</span>
+                }
+              </td>
+              @if (isAdmin) {
+                <td style="font-size:12px;color:var(--text-secondary);">{{ post.user?.name ?? '—' }}</td>
+              }
+              <td style="font-size:12px;color:var(--text-muted);">{{ post.created_at | date:'MMM d' }}</td>
+              <td class="text-end">
+                <div class="d-flex justify-content-end gap-1">
+                  <a [routerLink]="['/posts', post.id, 'edit']"
+                     class="btn btn-icon btn-sm"
+                     style="background:var(--bg-body);"
+                     title="Edit Post">
+                    <i class="bi bi-pencil" style="color:var(--crm-primary);"></i>
+                  </a>
+                  @if (post.status === 'draft' || post.status === 'scheduled' || post.status === 'failed' || isAdmin) {
+                    <button class="btn btn-icon btn-sm"
+                            style="background:rgba(239,68,68,0.08);"
+                            title="Delete Post"
+                            (click)="confirmDelete(post)"
+                            [disabled]="deleting() === post.id">
+                      @if (deleting() === post.id) {
+                        <span class="spinner-border spinner-border-sm" style="color:var(--crm-danger);"></span>
+                      } @else {
+                        <i class="bi bi-trash" style="color:var(--crm-danger);"></i>
+                      }
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  @if (meta() && meta()!.last_page > 1) {
+    <div class="card-body border-top d-flex align-items-center justify-content-between py-2">
+      <span style="font-size:12px;color:var(--text-muted);">
+        Showing {{ ((meta()!.current_page - 1) * meta()!.per_page) + 1 }}
+        – {{ getMin(meta()!.current_page * meta()!.per_page, meta()!.total) }} of {{ meta()!.total }}
+      </span>
+      <nav>
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item" [class.disabled]="meta()!.current_page === 1">
+            <button class="page-link" (click)="goToPage(meta()!.current_page - 1)">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+          </li>
+          @for (p of pages; track p) {
+            <li class="page-item" [class.active]="p === meta()!.current_page">
+              <button class="page-link" (click)="goToPage(p)">{{ p }}</button>
+            </li>
+          }
+          <li class="page-item" [class.disabled]="meta()!.current_page === meta()!.last_page">
+            <button class="page-link" (click)="goToPage(meta()!.current_page + 1)">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  }
+</div>

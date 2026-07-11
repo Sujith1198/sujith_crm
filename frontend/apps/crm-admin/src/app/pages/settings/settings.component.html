@@ -1,0 +1,124 @@
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h2 style="font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:2px;">Settings</h2>
+    <p style="font-size:13px;color:var(--text-muted);margin:0;">Manage application options and developer configurations</p>
+  </div>
+</div>
+
+@if (loading()) {
+  <div class="d-flex align-items-center justify-content-center" style="min-height:300px;">
+    <div class="spinner-border" style="color:var(--crm-primary);"></div>
+  </div>
+} @else {
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="row g-4">
+      <!-- Main Settings Form -->
+      <div class="col-12 col-lg-8">
+        <!-- General App Settings -->
+        <div class="card mb-4" style="border-radius:14px;">
+          <div class="card-header">General Settings</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">Application Name <span class="text-danger">*</span></label>
+              <input type="text" formControlName="app_name" class="form-control" id="settings-app-name"
+                     [class.is-invalid]="form.controls.app_name.invalid && form.controls.app_name.touched">
+            </div>
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <div class="form-check form-switch p-3 border rounded" style="background:var(--bg-body);cursor:pointer;"
+                     (click)="form.controls.auto_refresh_tokens.setValue(!form.controls.auto_refresh_tokens.value)">
+                  <input class="form-check-input" type="checkbox" formControlName="auto_refresh_tokens" (click)="$event.stopPropagation()">
+                  <label class="form-check-label ms-2" style="font-weight:600;font-size:13px;">Auto-Refresh Tokens</label>
+                  <p class="text-muted mb-0 mt-1" style="font-size:11px;">Automatically refresh expiring Page access tokens</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-check form-switch p-3 border rounded" style="background:var(--bg-body);cursor:pointer;"
+                     (click)="form.controls.enable_notifications.setValue(!form.controls.enable_notifications.value)">
+                  <input class="form-check-input" type="checkbox" formControlName="enable_notifications" (click)="$event.stopPropagation()">
+                  <label class="form-check-label ms-2" style="font-weight:600;font-size:13px;">System Notifications</label>
+                  <p class="text-muted mb-0 mt-1" style="font-size:11px;">Enable toast and email notifications for failed posts</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social API Integrations -->
+        <div class="card mb-4" style="border-radius:14px;">
+          <div class="card-header">Developer / OAuth API Credentials</div>
+          <div class="card-body">
+            <!-- Facebook Graph API -->
+            <h6 class="mb-3" style="font-weight:700;color:#1877f2;"><i class="bi bi-facebook me-2"></i>Facebook Integration</h6>
+            <div class="row g-3 mb-4">
+              <div class="col-12 col-md-6">
+                <label class="form-label">Facebook App ID</label>
+                <input type="text" formControlName="facebook_client_id" class="form-control" id="settings-fb-id" placeholder="Enter FB Client ID">
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label">Facebook App Secret</label>
+                <input type="password" formControlName="facebook_client_secret" class="form-control" id="settings-fb-secret" placeholder="••••••••••••">
+              </div>
+            </div>
+
+            <!-- Instagram Business API -->
+            <h6 class="mb-3" style="font-weight:700;color:#e1306c;"><i class="bi bi-instagram me-2"></i>Instagram Integration</h6>
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label">Instagram Client ID</label>
+                <input type="text" formControlName="instagram_client_id" class="form-control" id="settings-ig-id" placeholder="Enter IG Client ID">
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label">Instagram Client Secret</label>
+                <input type="password" formControlName="instagram_client_secret" class="form-control" id="settings-ig-secret" placeholder="••••••••••••">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scheduler Configurations -->
+        <div class="card mb-4" style="border-radius:14px;">
+          <div class="card-header">Scheduler Config</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">Scheduler Execution Interval (Minutes) <span class="text-danger">*</span></label>
+              <input type="number" formControlName="scheduler_frequency_mins" class="form-control" id="settings-freq" min="1"
+                     [class.is-invalid]="form.controls.scheduler_frequency_mins.invalid && form.controls.scheduler_frequency_mins.touched">
+              <p class="text-muted mt-1 mb-0" style="font-size:11px;">
+                Controls how frequently the post scheduling worker checks for upcoming posts. Recommended: 1 min.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action -->
+        <div>
+          <button type="submit" id="btn-save-settings" class="btn btn-primary btn-lg" [disabled]="submitting()">
+            @if (submitting()) { <span class="spinner-border spinner-border-sm me-2"></span>Saving... }
+            @else { <i class="bi bi-check2-circle me-1"></i> Save Configurations }
+          </button>
+        </div>
+      </div>
+
+      <!-- Helper Sidebar -->
+      <div class="col-12 col-lg-4">
+        <div class="card" style="border-radius:14px;background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.2);">
+          <div class="card-body">
+            <h6 style="font-weight:700;color:var(--crm-primary);margin-bottom:12px;">
+              <i class="bi bi-info-circle me-2"></i>Setup Guide
+            </h6>
+            <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">
+              Ensure your Facebook OAuth redirect URL is exactly configured inside the Meta Developer Console as follows:
+            </p>
+            <code class="d-block p-2 rounded mb-3 bg-dark text-white text-break" style="font-size:11px;">
+              http://localhost:8000/api/facebook/callback
+            </code>
+            <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;">
+              For live production environment setups, change the target domain within the meta developer app settings to your active hosting domain.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+}

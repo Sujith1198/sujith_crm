@@ -1,0 +1,21 @@
+{
+  "run": {
+    "command": "nx build crm-admin --skip-nx-cache",
+    "startTime": "2026-07-11T10:26:03.009Z",
+    "endTime": "2026-07-11T10:26:13.962Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "crm-admin:build:production",
+      "target": "build",
+      "projectName": "crm-admin",
+      "hash": "9638657484575413383",
+      "startTime": "2026-07-11T10:26:03.031Z",
+      "endTime": "2026-07-11T10:26:13.937Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 1
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+version: '3.9'
+
+services:
+  # ── Laravel App (PHP-FPM + Nginx) ──────────────────────────
+  app:
+    build:
+      context: .
+      target: backend
+    container_name: crm_app
+    restart: unless-stopped
+    env_file: backend/.env
+    volumes:
+      - ./backend/storage:/var/www/html/storage
+      - ./backend/.env:/var/www/html/.env
+    depends_on:
+      - db
+      - redis
+    networks:
+      - crm-network
+    ports:
+      - "80:80"
+
+  # ── Queue Worker ────────────────────────────────────────────
+  queue:
+    build:
+      context: .
+      target: backend
+    container_name: crm_queue
+    restart: unless-stopped
+    env_file: backend/.env
+    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    volumes:
+      - ./backend/storage:/var/www/html/storage
+    depends_on:
+      - db
+      - redis
+    networks:
+      - crm-network
+
+  # ── Scheduler ───────────────────────────────────────────────
+  scheduler:
+    build:
+      context: .
+      target: backend
+    container_name: crm_scheduler
+    restart: unless-stopped
+    env_file: backend/.env
+    command: >
+      sh -c "while true; do
+               php artisan schedule:run --verbose --no-interaction;
+               sleep 60;
+             done"
+    volumes:
+      - ./backend/storage:/var/www/html/storage
+    depends_on:
+      - db
+      - redis
+    networks:
+      - crm-network
+
+  # ── MySQL ───────────────────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: crm_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_DATABASE:      ${DB_DATABASE:-u376492188_crm}
+      MYSQL_USER:          ${DB_USERNAME:-crm_user}
+      MYSQL_PASSWORD:      ${DB_PASSWORD:-secret}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - crm-network
+    ports:
+      - "3306:3306"
+
+  # ── Redis (Queue + Cache) ───────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: crm_redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - crm-network
+    ports:
+      - "6379:6379"
+
+volumes:
+  mysql-data:
+  redis-data:
+
+networks:
+  crm-network:
+    driver: bridge

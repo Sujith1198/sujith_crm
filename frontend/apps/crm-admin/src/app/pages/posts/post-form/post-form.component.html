@@ -1,0 +1,324 @@
+<!-- Header -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h2 style="font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:2px;">
+      {{ isEdit ? 'Edit Post' : 'Create Post' }}
+    </h2>
+    <p style="font-size:13px;color:var(--text-muted);margin:0;">
+      {{ isEdit ? 'Update your post content and schedule' : 'Create and schedule a new social media post' }}
+    </p>
+  </div>
+  <a routerLink="/posts" class="btn btn-outline-primary btn-sm">
+    <i class="bi bi-arrow-left"></i> Back to Posts
+  </a>
+</div>
+
+@if (loading()) {
+  <div class="d-flex align-items-center justify-content-center" style="min-height:300px;">
+    <div class="spinner-border" style="color:var(--crm-primary);"></div>
+  </div>
+} @else {
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="row g-4">
+
+      <!-- ══════════════════════════════════════
+           LEFT COLUMN — Main Content
+      ══════════════════════════════════════ -->
+      <div class="col-12 col-xl-8">
+
+        <!-- Post Type Selector -->
+        <div class="card mb-4" style="border-radius:14px;">
+          <div class="card-header">Post Type</div>
+          <div class="card-body">
+            <div class="d-flex gap-2 flex-wrap">
+              @for (type of postTypes; track type.value) {
+                <button type="button"
+                        class="btn btn-sm d-flex align-items-center gap-2"
+                        [style]="form.controls.post_type.value === type.value
+                          ? 'background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;'
+                          : 'background:var(--bg-body);color:var(--text-secondary);'"
+                        (click)="form.controls.post_type.setValue(type.value)">
+                  <i class="bi {{ type.icon }}"></i>
+                  {{ type.label }}
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Card -->
+        <div class="card mb-4" style="border-radius:14px;">
+          <div class="card-header">Post Content</div>
+          <div class="card-body">
+
+            <!-- Title -->
+            <div class="mb-3">
+              <label class="form-label">Post Title <span class="text-danger">*</span></label>
+              <input type="text"
+                     id="post-title"
+                     formControlName="title"
+                     class="form-control"
+                     placeholder="Enter a descriptive title..."
+                     [class.is-invalid]="form.controls.title.invalid && form.controls.title.touched">
+              @if (form.controls.title.hasError('required') && form.controls.title.touched) {
+                <div class="invalid-feedback">Title is required.</div>
+              }
+            </div>
+
+            <!-- Caption -->
+            <div class="mb-3">
+              <label class="form-label d-flex justify-content-between">
+                <span>Caption</span>
+                <span style="font-weight:400;color:var(--text-muted);">
+                  {{ form.controls.caption.value.length }} / 2200
+                </span>
+              </label>
+              <textarea formControlName="caption"
+                        id="post-caption"
+                        class="form-control"
+                        rows="4"
+                        placeholder="Write your post caption here..."
+                        [class.is-invalid]="form.controls.caption.hasError('maxlength')">
+              </textarea>
+            </div>
+
+            <!-- Hashtags -->
+            <div class="mb-3">
+              <label class="form-label">Hashtags</label>
+              <input type="text"
+                     id="post-hashtags"
+                     formControlName="hashtags"
+                     class="form-control"
+                     placeholder="#socialmedia #marketing #branding">
+              <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">
+                Space-separated hashtags. They'll be appended to your caption.
+              </div>
+            </div>
+
+            <!-- Description (optional) -->
+            <div>
+              <label class="form-label">Additional Description</label>
+              <textarea formControlName="description"
+                        id="post-description"
+                        class="form-control"
+                        rows="2"
+                        placeholder="Optional internal notes...">
+              </textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Media Upload -->
+        @if (postType !== 'text') {
+          <div class="card mb-4" style="border-radius:14px;">
+            <div class="card-header d-flex align-items-center justify-content-between">
+              <span>Media
+                @if (postType === 'carousel') { <span style="font-size:11px;color:var(--text-muted);">(min 2 images)</span> }
+              </span>
+              <button type="button" class="btn btn-outline-primary btn-sm" (click)="openFilePicker()">
+                <i class="bi bi-plus"></i> Add Files
+              </button>
+            </div>
+            <div class="card-body">
+
+              <!-- Hidden file input -->
+              <input #fileInput
+                     type="file"
+                     [accept]="postType === 'video' || postType === 'reel' ? 'video/*' : 'image/*,video/*'"
+                     [multiple]="postType === 'carousel'"
+                     class="d-none"
+                     (change)="onFileSelect($event)">
+
+              <!-- Drag Zone -->
+              <div class="upload-zone"
+                   [class.dragover]="isDragging()"
+                   (click)="openFilePicker()"
+                   (dragover)="onDragOver($event)"
+                   (dragleave)="onDragLeave()"
+                   (drop)="onDrop($event)">
+                <div class="upload-zone-icon"><i class="bi bi-cloud-arrow-up"></i></div>
+                <div class="upload-zone-title">Drop files here or click to upload</div>
+                <div class="upload-zone-subtitle">
+                  @if (postType === 'video' || postType === 'reel') {
+                    MP4, MOV, AVI up to 50MB
+                  } @else {
+                    JPG, PNG, GIF, WebP up to 50MB
+                  }
+                </div>
+              </div>
+
+              <!-- Existing Media Previews (edit mode) -->
+              @if (existingMedia().length > 0) {
+                <div class="mt-3">
+                  <p style="font-size:12px;font-weight:600;color:var(--text-muted);">CURRENT MEDIA</p>
+                  <div class="media-preview-grid">
+                    @for (media of existingMedia(); track media.id) {
+                      <div class="media-preview-item">
+                        @if (media.type === 'image') {
+                          <img [src]="media.url" [alt]="media.file_name">
+                        } @else {
+                          <video [src]="media.url" muted></video>
+                        }
+                        <button class="media-remove-btn" type="button"
+                                (click)="removeExistingMedia(media.id)">
+                          <i class="bi bi-x"></i>
+                        </button>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+
+              <!-- New File Previews -->
+              @if (mediaPreviews().length > 0) {
+                <div class="mt-3">
+                  <p style="font-size:12px;font-weight:600;color:var(--text-muted);">
+                    NEW FILES ({{ mediaPreviews().length }})
+                  </p>
+                  <div class="media-preview-grid">
+                    @for (preview of mediaPreviews(); track preview.name; let i = $index) {
+                      <div class="media-preview-item">
+                        @if (preview.type.startsWith('image/')) {
+                          <img [src]="preview.url" [alt]="preview.name">
+                        } @else {
+                          <video [src]="preview.url" muted style="width:100%;height:100%;object-fit:cover;"></video>
+                        }
+                        <button class="media-remove-btn" type="button" (click)="removeMedia(i)">
+                          <i class="bi bi-x"></i>
+                        </button>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- ══════════════════════════════════════
+           RIGHT COLUMN — Platforms & Scheduling
+      ══════════════════════════════════════ -->
+      <div class="col-12 col-xl-4">
+
+        <!-- Platform Selection -->
+        <div class="card mb-4" style="border-radius:14px;">
+          <div class="card-header">Publish To</div>
+          <div class="card-body">
+
+            <!-- Facebook -->
+            <div class="d-flex align-items-center justify-content-between p-3 mb-2"
+                 style="border:1.5px solid var(--border-color);border-radius:10px;cursor:pointer;transition:all .2s;"
+                 [style.border-color]="form.controls.post_to_facebook.value ? '#1877f2' : 'var(--border-color)'"
+                 [style.background]="form.controls.post_to_facebook.value ? 'rgba(24,119,242,0.06)' : 'transparent'"
+                 (click)="form.controls.post_to_facebook.setValue(!form.controls.post_to_facebook.value)">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-facebook" style="font-size:24px;color:#1877f2;"></i>
+                <div>
+                  <div style="font-weight:600;font-size:13px;color:var(--text-primary);">Facebook</div>
+                  <div style="font-size:11px;color:var(--text-muted);">Publish to Facebook Page</div>
+                </div>
+              </div>
+              <div class="form-check form-switch mb-0">
+                <input class="form-check-input" type="checkbox"
+                       id="toggle-facebook"
+                       formControlName="post_to_facebook"
+                       style="cursor:pointer;"
+                       (click)="$event.stopPropagation()">
+              </div>
+            </div>
+
+            <!-- Instagram -->
+            <div class="d-flex align-items-center justify-content-between p-3"
+                 style="border:1.5px solid var(--border-color);border-radius:10px;cursor:pointer;transition:all .2s;"
+                 [style.border-color]="form.controls.post_to_instagram.value ? '#e1306c' : 'var(--border-color)'"
+                 [style.background]="form.controls.post_to_instagram.value ? 'rgba(225,48,108,0.06)' : 'transparent'"
+                 (click)="form.controls.post_to_instagram.setValue(!form.controls.post_to_instagram.value)">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-instagram" style="font-size:24px;color:#e1306c;"></i>
+                <div>
+                  <div style="font-weight:600;font-size:13px;color:var(--text-primary);">Instagram</div>
+                  <div style="font-size:11px;color:var(--text-muted);">Post to Instagram Business</div>
+                </div>
+              </div>
+              <div class="form-check form-switch mb-0">
+                <input class="form-check-input" type="checkbox"
+                       id="toggle-instagram"
+                       formControlName="post_to_instagram"
+                       style="cursor:pointer;"
+                       (click)="$event.stopPropagation()">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scheduling -->
+        <div class="card mb-4" style="border-radius:14px;">
+          <div class="card-header">Scheduling</div>
+          <div class="card-body">
+
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div>
+                <div style="font-weight:600;font-size:13px;color:var(--text-primary);">Schedule Post</div>
+                <div style="font-size:11px;color:var(--text-muted);">Publish at a specific time</div>
+              </div>
+              <div class="form-check form-switch mb-0">
+                <input class="form-check-input" type="checkbox"
+                       id="toggle-schedule"
+                       formControlName="is_scheduled"
+                       style="cursor:pointer;">
+              </div>
+            </div>
+
+            @if (isScheduled) {
+              <div class="mb-3">
+                <label class="form-label">Publish Date & Time <span class="text-danger">*</span></label>
+                <input type="datetime-local"
+                       id="publish-at"
+                       formControlName="publish_at"
+                       class="form-control"
+                       [min]="'2024-01-01T00:00'">
+              </div>
+
+              <div>
+                <label class="form-label">Timezone</label>
+                <select formControlName="timezone" id="post-timezone" class="form-select">
+                  @for (tz of timezones; track tz) {
+                    <option [value]="tz">{{ tz }}</option>
+                  }
+                </select>
+              </div>
+            } @else {
+              <div class="text-center py-2">
+                <i class="bi bi-lightning-charge-fill" style="font-size:28px;color:#f59e0b;"></i>
+                <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">
+                  Post will be published immediately when submitted.
+                </p>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="d-grid gap-2">
+          <button type="submit"
+                  id="btn-submit-post"
+                  class="btn btn-primary"
+                  style="height:44px;font-size:14px;"
+                  [disabled]="submitting()">
+            @if (submitting()) {
+              <span class="spinner-border spinner-border-sm me-2"></span>
+              {{ isScheduled ? 'Scheduling...' : 'Publishing...' }}
+            } @else {
+              <i class="bi" [class.bi-clock]="isScheduled" [class.bi-send-fill]="!isScheduled"></i>
+              {{ isEdit ? 'Update Post' : (isScheduled ? 'Schedule Post' : 'Publish Now') }}
+            }
+          </button>
+          <a routerLink="/posts" class="btn btn-outline-primary">
+            Cancel
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+}

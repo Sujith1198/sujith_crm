@@ -1,0 +1,175 @@
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h2 style="font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:2px;">Reports</h2>
+    <p style="font-size:13px;color:var(--text-muted);margin:0;">Export your data in multiple formats</p>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-12 col-lg-7">
+    <div class="card" style="border-radius:14px;">
+      <div class="card-header">Export Configuration</div>
+      <div class="card-body">
+
+        <!-- Report Type -->
+        <div class="mb-4">
+          <label class="form-label">Report Type</label>
+          <div class="d-flex gap-3">
+            <div class="flex-1 p-3 text-center"
+                 style="border:2px solid var(--border-color);border-radius:12px;cursor:pointer;transition:all .2s;"
+                 [style.border-color]="filters.type === 'posts' ? 'var(--crm-primary)' : 'var(--border-color)'"
+                 [style.background]="filters.type === 'posts' ? 'rgba(99,102,241,0.06)' : 'transparent'"
+                 (click)="filters.type = 'posts'">
+              <i class="bi bi-file-post-fill" style="font-size:24px;color:#6366f1;"></i>
+              <div style="font-weight:600;font-size:13px;margin-top:6px;color:var(--text-primary);">Posts Report</div>
+              <div style="font-size:11px;color:var(--text-muted);">All posts with status</div>
+            </div>
+            <div class="flex-1 p-3 text-center"
+                 style="border:2px solid var(--border-color);border-radius:12px;cursor:pointer;transition:all .2s;"
+                 [style.border-color]="filters.type === 'analytics' ? '#059669' : 'var(--border-color)'"
+                 [style.background]="filters.type === 'analytics' ? 'rgba(5,150,105,0.06)' : 'transparent'"
+                 (click)="filters.type = 'analytics'">
+              <i class="bi bi-bar-chart-fill" style="font-size:24px;color:#059669;"></i>
+              <div style="font-weight:600;font-size:13px;margin-top:6px;color:var(--text-primary);">Analytics Report</div>
+              <div style="font-size:11px;color:var(--text-muted);">Engagement & metrics</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Export Format -->
+        <div class="mb-4">
+          <label class="form-label">Export Format</label>
+          <div class="d-flex gap-2">
+            @for (fmt of [{v:'xlsx',label:'Excel',icon:'bi-file-earmark-excel',color:'#059669'},
+                          {v:'csv',label:'CSV',icon:'bi-filetype-csv',color:'#0284c7'},
+                          {v:'pdf',label:'PDF',icon:'bi-file-earmark-pdf',color:'#dc2626'}]; track fmt.v) {
+              <button type="button"
+                      class="btn flex-1 d-flex align-items-center justify-content-center gap-2"
+                      [style]="filters.format === fmt.v
+                        ? 'border:2px solid '+fmt.color+';background:rgba(0,0,0,0.04);color:'+fmt.color+';font-weight:700;'
+                        : 'border:1.5px solid var(--border-color);background:transparent;color:var(--text-secondary);'"
+                      (click)="filters.format = $any(fmt.v)">
+                <i class="bi {{ fmt.icon }}" style="font-size:18px;"></i>
+                {{ fmt.label }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-md-6">
+            <label class="form-label">Date From</label>
+            <input type="date" class="form-control" [(ngModel)]="filters.date_from" id="report-date-from">
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="form-label">Date To</label>
+            <input type="date" class="form-control" [(ngModel)]="filters.date_to" id="report-date-to">
+          </div>
+
+          @if (filters.type === 'posts') {
+            <div class="col-12 col-md-6">
+              <label class="form-label">Status</label>
+              <select class="form-select" [(ngModel)]="filters.status" id="report-status">
+                <option value="">All Status</option>
+                <option value="published">Published</option>
+                <option value="scheduled">Scheduled</option>
+                <option value="draft">Draft</option>
+                <option value="failed">Failed</option>
+              </select>
+            </div>
+          }
+
+          <div class="col-12 col-md-6">
+            <label class="form-label">Platform</label>
+            <select class="form-select" [(ngModel)]="filters.platform" id="report-platform">
+              <option value="">All Platforms</option>
+              <option value="facebook">Facebook</option>
+              <option value="instagram">Instagram</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Export Button -->
+        <button type="button"
+                id="btn-export-report"
+                class="btn btn-primary w-100"
+                style="height:46px;font-size:14px;"
+                (click)="export()"
+                [disabled]="exporting()">
+          @if (exporting()) {
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Generating report...
+          } @else {
+            <i class="bi bi-download me-2"></i>
+            Generate & Download
+          }
+        </button>
+
+        @if (lastExported()) {
+          <p style="text-align:center;font-size:12px;color:var(--crm-success);margin-top:12px;">
+            <i class="bi bi-check-circle me-1"></i>
+            Last exported at {{ lastExported() }}
+          </p>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Panel -->
+  <div class="col-12 col-lg-5">
+    <div class="card mb-3" style="border-radius:14px;">
+      <div class="card-header">Available Reports</div>
+      <div class="card-body p-0">
+        @for (report of [
+          { icon: 'bi-file-post-fill',   color: '#6366f1', title: 'Posts Report',        desc: 'All posts with status, platforms, publish date, and author' },
+          { icon: 'bi-bar-chart-fill',   color: '#059669', title: 'Analytics Report',     desc: 'Reach, impressions, likes, comments, shares, engagement rate' },
+          { icon: 'bi-people-fill',      color: '#8b5cf6', title: 'Users Report',         desc: 'All user accounts with roles, status, and login history' },
+          { icon: 'bi-calendar-check',   color: '#f59e0b', title: 'Scheduled Posts',      desc: 'Upcoming scheduled posts across all platforms' },
+        ]; track report.title; let last = $last) {
+          <div class="d-flex align-items-start gap-3 p-3"
+               [style.border-bottom]="!last ? '1px solid var(--border-color)' : 'none'">
+            <div style="width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"
+                 [style.background]="'rgba(0,0,0,0.05)'">
+              <i class="bi {{ report.icon }}" [style.color]="report.color" style="font-size:18px;"></i>
+            </div>
+            <div>
+              <div style="font-weight:600;font-size:13px;color:var(--text-primary);">{{ report.title }}</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">{{ report.desc }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Format Info -->
+    <div class="card" style="border-radius:14px;">
+      <div class="card-body">
+        <h6 style="font-weight:700;color:var(--text-primary);margin-bottom:12px;">Format Guide</h6>
+        <div class="d-flex flex-column gap-2">
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-file-earmark-excel" style="font-size:20px;color:#059669;"></i>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--text-primary);">Excel (.xlsx)</div>
+              <div style="font-size:11px;color:var(--text-muted);">Styled spreadsheet, best for analysis</div>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-filetype-csv" style="font-size:20px;color:#0284c7;"></i>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--text-primary);">CSV</div>
+              <div style="font-size:11px;color:var(--text-muted);">Plain data, best for imports</div>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-file-earmark-pdf" style="font-size:20px;color:#dc2626;"></i>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--text-primary);">PDF</div>
+              <div style="font-size:11px;color:var(--text-muted);">Formatted report, best for sharing</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

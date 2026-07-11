@@ -1,0 +1,135 @@
+<!-- Mobile Overlay -->
+@if (mobileSidebarOpen()) {
+  <div class="sidebar-overlay" (click)="closeMobileSidebar()"
+       style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1039;"></div>
+}
+
+<div class="app-shell">
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════ -->
+  <aside class="sidebar"
+         [class.collapsed]="sidebarCollapsed()"
+         [class.mobile-open]="mobileSidebarOpen()">
+
+    <!-- Brand -->
+    <a routerLink="/dashboard" class="sidebar-brand">
+      <div class="sidebar-brand-icon">
+        <i class="bi bi-broadcast"></i>
+      </div>
+      <span class="sidebar-brand-name">CRM Social</span>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+      @for (section of navSections; track section.title) {
+        @if (isNavVisible(section)) {
+          <div class="nav-section-title">{{ section.title }}</div>
+
+          @for (item of section.items; track item.route) {
+            @if (isItemVisible(item)) {
+              <a [routerLink]="item.route"
+                 routerLinkActive="active"
+                 class="nav-item-link"
+                 (click)="closeMobileSidebar()"
+                 [title]="sidebarCollapsed() ? item.label : ''">
+                <i class="bi {{ item.icon }} nav-item-icon"></i>
+                <span class="nav-item-label">{{ item.label }}</span>
+              </a>
+            }
+          }
+        }
+      }
+    </nav>
+
+    <!-- User footer -->
+    <div class="sidebar-footer">
+      <div class="sidebar-user" (click)="logout()" title="Logout">
+        <img [src]="currentUser()?.avatar_url"
+             [alt]="currentUser()?.name"
+             class="sidebar-avatar" />
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">{{ currentUser()?.name }}</div>
+          <div class="sidebar-user-role">{{ currentUser()?.roles?.[0] | titlecase }}</div>
+        </div>
+        <i class="bi bi-box-arrow-right ms-auto"
+           style="color:rgba(255,255,255,0.4);font-size:16px;"
+           [style.display]="sidebarCollapsed() ? 'none' : 'block'"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════
+       MAIN CONTENT
+  ══════════════════════════════════════ -->
+  <div class="main-content" [class.sidebar-collapsed]="sidebarCollapsed()">
+
+    <!-- ── Topbar ─────────────────────── -->
+    <header class="topbar" [class.sidebar-collapsed]="sidebarCollapsed()">
+
+      <!-- Sidebar Toggle -->
+      <button class="sidebar-toggle" (click)="toggleSidebar()" aria-label="Toggle sidebar">
+        <i class="bi" [class.bi-list]="!sidebarCollapsed()" [class.bi-layout-sidebar-reverse]="sidebarCollapsed()"></i>
+      </button>
+
+      <!-- Breadcrumb slot (pages inject via content projection or signal) -->
+      <div class="topbar-breadcrumb">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a routerLink="/dashboard" style="color:var(--crm-primary);text-decoration:none;">Home</a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- Actions -->
+      <div class="topbar-actions">
+        <!-- Dark Mode Toggle -->
+        <button class="topbar-btn" (click)="toggleDarkMode()" [title]="darkMode() ? 'Light Mode' : 'Dark Mode'">
+          <i class="bi" [class.bi-sun-fill]="darkMode()" [class.bi-moon-fill]="!darkMode()"></i>
+        </button>
+
+        <!-- Profile -->
+        <div class="dropdown">
+          <button class="d-flex align-items-center gap-2 border-0 bg-transparent cursor-pointer"
+                  data-bs-toggle="dropdown" style="cursor:pointer;">
+            <img [src]="currentUser()?.avatar_url"
+                 [alt]="currentUser()?.name"
+                 style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--crm-primary);" />
+            <div class="d-none d-md-block text-start">
+              <div style="font-size:13px;font-weight:600;color:var(--text-primary);">{{ currentUser()?.name }}</div>
+              <div style="font-size:11px;color:var(--text-muted);">{{ currentUser()?.roles?.[0] | titlecase }}</div>
+            </div>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" style="min-width:180px;">
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2" routerLink="/profile">
+                <i class="bi bi-person"></i> My Profile
+              </a>
+            </li>
+            @if (isAdmin()) {
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-2" routerLink="/settings">
+                  <i class="bi bi-gear"></i> Settings
+                </a>
+              </li>
+            }
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <button class="dropdown-item d-flex align-items-center gap-2 text-danger" (click)="logout()">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Page Content ──────────────── -->
+    <main class="page-wrapper">
+      <router-outlet />
+    </main>
+  </div>
+</div>

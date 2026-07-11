@@ -1,0 +1,122 @@
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h2 style="font-size:20px;font-weight:800;color:var(--text-primary);margin-bottom:2px;">My Profile</h2>
+    <p style="font-size:13px;color:var(--text-muted);margin:0;">Manage your personal information and security settings</p>
+  </div>
+</div>
+
+<div class="row g-4">
+  <!-- Profile Card -->
+  <div class="col-12 col-lg-4">
+    <div class="card text-center" style="border-radius:14px;">
+      <div class="card-body p-4">
+        <div class="position-relative d-inline-block mb-3">
+          <img [src]="user()?.avatar_url"
+               [alt]="user()?.name"
+               style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--crm-primary);">
+          <div style="position:absolute;bottom:0;right:0;width:24px;height:24px;border-radius:50%;background:var(--crm-primary);
+                       display:flex;align-items:center;justify-content:center;border:2px solid var(--bg-card);">
+            <i class="bi bi-camera-fill text-white" style="font-size:10px;"></i>
+          </div>
+        </div>
+        <h5 style="font-weight:700;color:var(--text-primary);">{{ user()?.name }}</h5>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">{{ user()?.email }}</p>
+        @for (role of user()?.roles ?? []; track role) {
+          <span class="badge-status badge-{{ role }}">{{ role }}</span>
+        }
+        <hr style="border-color:var(--border-color);">
+        <div class="d-flex flex-column gap-2 text-start">
+          <div class="d-flex justify-content-between">
+            <span style="font-size:12px;color:var(--text-muted);">Status</span>
+            <span class="badge-status badge-{{ user()?.status }}">{{ user()?.status }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span style="font-size:12px;color:var(--text-muted);">Timezone</span>
+            <span style="font-size:12px;color:var(--text-secondary);">{{ user()?.timezone }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span style="font-size:12px;color:var(--text-muted);">Member since</span>
+            <span style="font-size:12px;color:var(--text-secondary);">{{ user()?.created_at | date:'MMM y' }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span style="font-size:12px;color:var(--text-muted);">Last login</span>
+            <span style="font-size:12px;color:var(--text-secondary);">
+              {{ user()?.last_login_at ? (user()!.last_login_at | date:'MMM d, HH:mm') : 'N/A' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Forms -->
+  <div class="col-12 col-lg-8">
+    <!-- Profile Info Form -->
+    <div class="card mb-4" style="border-radius:14px;">
+      <div class="card-header">Personal Information</div>
+      <div class="card-body">
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" novalidate>
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label class="form-label">Full Name <span class="text-danger">*</span></label>
+              <input type="text" formControlName="name" class="form-control" id="profile-name"
+                     [class.is-invalid]="profileForm.controls.name.invalid && profileForm.controls.name.touched">
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" formControlName="phone" class="form-control" id="profile-phone" placeholder="+1 234 567 8900">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Timezone</label>
+              <select formControlName="timezone" class="form-select" id="profile-timezone">
+                @for (tz of timezones; track tz) { <option [value]="tz">{{ tz }}</option> }
+              </select>
+            </div>
+          </div>
+          <div class="mt-4">
+            <button type="submit" id="btn-save-profile" class="btn btn-primary" [disabled]="submitting()">
+              @if (submitting()) { <span class="spinner-border spinner-border-sm me-2"></span>Saving... }
+              @else { <i class="bi bi-check2 me-1"></i> Save Changes }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Password Form -->
+    <div class="card" style="border-radius:14px;">
+      <div class="card-header">Change Password</div>
+      <div class="card-body">
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" novalidate>
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label class="form-label">New Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input [type]="showPw() ? 'text' : 'password'"
+                       formControlName="password" class="form-control"
+                       id="profile-password" placeholder="Min. 8 characters"
+                       [class.is-invalid]="passwordForm.controls.password.invalid && passwordForm.controls.password.touched">
+                <button type="button" class="input-group-text" (click)="showPw.set(!showPw())"
+                        style="background:var(--bg-body);border:1.5px solid var(--border-color);cursor:pointer;">
+                  <i class="bi" [class.bi-eye]="!showPw()" [class.bi-eye-slash]="showPw()"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+              <input [type]="showPw() ? 'text' : 'password'"
+                     formControlName="password_confirmation" class="form-control"
+                     id="profile-password-confirm" placeholder="Repeat new password">
+            </div>
+          </div>
+          <div class="mt-4">
+            <button type="submit" id="btn-change-password" class="btn btn-primary" [disabled]="pwSubmitting()">
+              @if (pwSubmitting()) { <span class="spinner-border spinner-border-sm me-2"></span>Updating... }
+              @else { <i class="bi bi-shield-lock me-1"></i> Change Password }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
