@@ -1,0 +1,37 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@crm/core":         ["libs/core/src/index.ts"],
+      "@crm/shared":       ["libs/shared/src/index.ts"],
+      "@crm/ui":           ["libs/ui/src/index.ts"],
+      "@crm/auth":         ["libs/auth/src/index.ts"],
+      "@crm/dashboard":    ["libs/dashboard/src/index.ts"],
+      "@crm/users":        ["libs/users/src/index.ts"],
+      "@crm/posts":        ["libs/posts/src/index.ts"],
+      "@crm/analytics":    ["libs/analytics/src/index.ts"],
+      "@crm/reports":      ["libs/reports/src/index.ts"],
+      "@crm/settings":     ["libs/settings/src/index.ts"],
+      "@crm/social":       ["libs/social/src/index.ts"],
+      "@crm/services":     ["libs/services/src/index.ts"],
+      "@crm/guards":       ["libs/guards/src/index.ts"],
+      "@crm/interceptors": ["libs/interceptors/src/index.ts"],
+      "@crm/models":       ["libs/models/src/index.ts"],
+      "@env/environment":  ["apps/crm-admin/src/environments/environment.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

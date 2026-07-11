@@ -1,0 +1,45 @@
+{
+  "name": "crm-social-media",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "nx serve crm-admin",
+    "build": "nx build crm-admin",
+    "test": "nx test crm-admin",
+    "lint": "nx lint crm-admin",
+    "affected:test": "nx affected --target=test",
+    "affected:build": "nx affected --target=build"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~20.0.0",
+    "@angular/cdk": "~20.0.0",
+    "@angular/common": "~20.0.0",
+    "@angular/compiler": "~20.0.0",
+    "@angular/core": "~20.0.0",
+    "@angular/forms": "~20.0.0",
+    "@angular/material": "~20.0.0",
+    "@angular/platform-browser": "~20.0.0",
+    "@angular/platform-browser-dynamic": "~20.0.0",
+    "@angular/router": "~20.0.0",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "chart.js": "^4.4.3",
+    "ng2-charts": "^7.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.6.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~20.0.0",
+    "@angular/cli": "~20.0.0",
+    "@angular/compiler-cli": "~20.0.0",
+    "@nx/angular": "^20.0.0",
+    "@nx/eslint": "^20.0.0",
+    "@nx/eslint-plugin": "^20.0.0",
+    "@nx/workspace": "^20.0.0",
+    "@types/node": "^20.0.0",
+    "nx": "^20.0.0",
+    "typescript": "~5.8.0"
+  }
+}
