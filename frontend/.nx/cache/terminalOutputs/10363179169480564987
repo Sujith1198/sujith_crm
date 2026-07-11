@@ -1,0 +1,264 @@
+[33m❯[39m Building...
+[32m✔[39m Building...
+[37mApplication bundle generation failed. [5.293 seconds][39m
+[37m[39m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLink is not used within the template of ForgotPasswordComponent[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[33m[39m[22m
+[1m[33m    apps/crm-admin/src/app/pages/auth/forgot-password/forgot-password.component.ts:16:47:[39m[22m
+[1m[33m[37m      16 │   imports: [CommonModule, ReactiveFormsModule, [32mRouterLink[37m],[39m[22m
+[1m[33m         ╵                                                [32m~~~~~~~~~~[0m[39m[22m
+[1m[33m[39m[22m
+[1m[33m[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2352: Conversion of type 'AnalyticsSummary' to type 'Record<string, number>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.[39m[22m
+[1m[31m  Index signature for type 'string' is missing in type 'AnalyticsSummary'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/analytics/analytics.component.ts:113:38:[39m[22m
+[1m[31m[37m      113 │ ...t: (res) => this.summary.set([32mres.data as Record<string, number>[37m),[39m[22m
+[1m[31m          ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Opening tag "form" not terminated.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/forgot-password/forgot-password.component.html:50:10:[39m[22m
+[1m[31m[37m      50 │           [32m<form [formGroup]/[37m="form" (ngSubmit)="submit()" novalidate>[39m[22m
+[1m[31m         ╵           [32m~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m  Error occurs in the template of component ForgotPasswordComponent.[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/forgot-password/forgot-password.component.ts:17:15:[39m[22m
+[1m[31m[37m      17 │   templateUrl: [32m'./forgot-password.component.html'[37m,[39m[22m
+[1m[31m         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected closing tag "form". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/forgot-password/forgot-password.component.html:95:10:[39m[22m
+[1m[31m[37m      95 │           [32m</form>[37m[39m[22m
+[1m[31m         ╵           [32m~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m  Error occurs in the template of component ForgotPasswordComponent.[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/forgot-password/forgot-password.component.ts:17:15:[39m[22m
+[1m[31m[37m      17 │   templateUrl: [32[39m[22m[1m[31mm'./forgot-password.component.html'[37m,[39m[22m
+[1m[31m         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'currentYear' does not exist on type 'LoginComponent'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/login/login.component.html:114:37:[39m[22m
+[1m[31m[37m      114 │ ...  CRM Social Media &copy; {{ [32mcurrentYear[37m }}. All rights reserved.[39m[22m
+[1m[31m          ╵                                 [32m~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m  Error occurs in the template of component LoginComponent.[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/login/login.component.ts:16:15:[39m[22m
+[1m[31m[37m      16 │   templateUrl: [32m'./login.component.html'[37m,[39m[22m
+[1m[31m         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2729: Property 'fb' is used before its initialization.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/login/login.component.ts:19:14:[39m[22m
+[1m[31m[37m      19 │   form = this.[32mfb[37m.nonNullable.group({[39m[22m
+[1m[31m         ╵               [32m~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m  'fb' is declared here.[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/login/login.component.ts:29:4:[39m[22m
+[1m[31m[37m      29 │     [32mprivate fb:          FormBuilder[37m,[39m[22m
+[1m[31m         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'cutout' does not exist in type '_DeepPartialObject<CoreChartOptions<keyof ChartTypeRegistry> & ElementChartOptions<keyof ChartTypeRegistry> & PluginChartOptions<...> & DatasetChartOptions<...> & ScaleChartOptions<...>>'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/dashboard/dashboard.component.ts:112:4:[39m[22m
+[1m[31m[37m      112 │     [32mcutout[37m: '65%',[39m[22m
+[1m[31m          ╵     [32m~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[37mWatch mode enabled. Watching for file changes...[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37mApplication bundle generation failed. [1.462 seconds][39m
+[37m[39m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2352: Conversion of type 'AnalyticsSummary' to type 'Record<string, number>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.[39m[22m
+[1m[31m  Index signature for type 'string' is missing in type 'AnalyticsSummary'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/analytics/analytics.component.ts:113:38:[39m[22m
+[1m[31m[37m      113 │ ...t: (res) => this.summary.set([32mres.data as Record<string, number>[37m),[39m[22m
+[1m[31m          ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'currentYear' does not exist on type 'LoginComponent'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/login/login.component.html:114:37:[39m[22m
+[1m[31m[37m      114 │ ...  CRM Social Media &copy; {{ [32mcurrentYear[37m }}. All rights reserved.[39m[22m
+[1m[31m          ╵                                 [32m~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m  Error occurs in the template of component LoginComponent.[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/login/login.component.ts:16:15:[39m[22m
+[1m[31m[37m      16 │   templateUrl: [32m'./login.component.html'[37m,[39m[22m
+[1m[31m         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2729: Property 'fb' is used before its initialization.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/login/login.component.ts:19:14:[39m[22m
+[1m[31m[37m      19 │   form = this.[32mfb[37m.nonNullable.group({[39m[22m
+[1m[31m         ╵               [32m~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m  'fb' is declared here.[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/auth/login/login.component.ts:29:4:[39m[22m
+[1m[31m[37m      29 │     [32mprivate fb:          FormBuilder[37m,[39m[22m
+[1m[31m         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'cutout' does not exist in type '_DeepPartialO[39m[22m[1m[31mbject<CoreChartOptions<keyof ChartTypeRegistry> & ElementChartOptions<keyof ChartTypeRegistry> & PluginChartOptions<...> & DatasetChartOptions<...> & ScaleChartOptions<...>>'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/dashboard/dashboard.component.ts:112:4:[39m[22m
+[1m[31m[37m      112 │     [32mcutout[37m: '65%',[39m[22m
+[1m[31m          ╵     [32m~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37mApplication bundle generation failed. [0.454 seconds][39m
+[37m[39m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2352: Conversion of type 'AnalyticsSummary' to type 'Record<string, number>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.[39m[22m
+[1m[31m  Index signature for type 'string' is missing in type 'AnalyticsSummary'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/analytics/analytics.component.ts:113:38:[39m[22m
+[1m[31m[37m      113 │ ...t: (res) => this.summary.set([32mres.data as Record<string, number>[37m),[39m[22m
+[1m[31m          ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'cutout' does not exist in type '_DeepPartialObject<CoreChartOptions<keyof ChartTypeRegistry> & ElementChartOptions<keyof ChartTypeRegistry> & PluginChartOptions<...> & DatasetChartOptions<...> & ScaleChartOptions<...>>'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/dashboard/dashboard.component.ts:112:4:[39m[22m
+[1m[31m[37m      112 │     [32mcutout[37m: '65%',[39m[22m
+[1m[31m          ╵     [32m~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37mApplication bundle generation failed. [0.653 seconds][39m
+[37m[39m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'cutout' does not exist in type '_DeepPartialObject<CoreChartOptions<keyof ChartTypeRegistry> & ElementChartOptions<keyof ChartTypeRegistry> & PluginChartOptions<...> & DatasetChartOptions<...> & ScaleChartOptions<...>>'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m    apps/crm-admin/src/app/pages/dashboard/dashboard.component.ts:112:4:[39m[22m
+[1m[31m[37m      112 │     [32mcutout[37m: '65%',[39m[22m
+[1m[31m          ╵     [32m~~~~~~[0m[39m[22m
+[1m[31m[39m[22m
+[1m[31m[39m[22m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m                    [2m | [22m [1mRaw size[22m[39m
+[37m[32mstyles.css[39m[37m         [2m | [22m[2mstyles[22m                   [2m | [22m[36m400.30 kB[39m[37m[2m | [22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m                     [2m | [22m [36m15.01 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-BF5D5QCF.js[39m[37m  [2m | [22m[2m-[22m                        [2m | [22m [36m10.87 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-CZJLB7T5.js[39m[37m  [2m | [22m[2m-[22m                        [2m | [22m  [36m1.08 kB[39m[37m[2m | [22m[39m
+[37m[32mpolyfills.js[39m[37m       [2m | [22m[2mpolyfills[22m                [2m | [22m [36m95 bytes[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1m [22m                  [2m | [22m[1mInitial total[22m            [2m | [22m[1m427.35 kB[22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m                    [2m | [22m [1mRaw size[22m[39m
+[37m[32mchunk-BKFI6PW7.js[39m[37m  [2m | [22m[2mpost-form-component[22m      [2m | [22m [36m52.26 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-RBLPURKE.js[39m[37m  [2m | [22m[2mdashboard-component[22m      [2m | [22m [36m41.75 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-ITFI5TG6.js[39m[37m  [2m | [22m[2mposts-list-component[22m     [2m | [22m [36m39.97 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-S63TOSJL.js[39m[37m  [2m | [22m[2msocial-component[22m         [2m | [22m [36m38.08 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-MY6BMXEE.js[39m[37m  [2m | [22m[2musers-list-component[22m     [2m | [22m [36m35.10 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-WR7UX56D.js[39m[37m  [2m | [22m[2mreports-component[22m        [2m | [22m [36m30.68 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-66QITX35.js[39m[37m  [2m | [22m[2manalytics-component[22m      [2m | [22m [36m28.57 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-GYC6Q5BY.js[39m[37m  [2m | [22m[2muser-form-component[22m      [2m | [22m [36m28.23 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-V7UL72P2.js[39m[37m  [2m | [22m[2mprofile-component[22m        [2m | [22m [36m24.31 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-2SC5PY[39m[37mJV.js[39m[37m  [2m | [22m[2msettings-component[22m       [2m | [22m [36m24.18 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-SVYNS2AA.js[39m[37m  [2m | [22m[2mshell-component[22m          [2m | [22m [36m23.43 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-AWXDAPFH.js[39m[37m  [2m | [22m[2mlogin-component[22m          [2m | [22m [36m19.71 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-BZDRWF7I.js[39m[37m  [2m | [22m[2mforgot-password-component[22m[2m | [22m [36m17.50 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-BXRXUVNB.js[39m[37m  [2m | [22m[2mauth-routes[22m              [2m | [22m[36m561 bytes[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [1.379 seconds][39m
+[37m[39m
+[37mNOTE: Raw file sizes do not reflect development server per-request transformations.[39m
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4200[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m                    [2m | [22m [1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m                     [2m | [22m [36m15.01 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-2DHZRV5Y.js[39m[37m  [2m | [22m[2m-[22m                        [2m | [22m [36m10.88 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m                    [2m | [22m [1mRaw size[22m[39m
+[37m[32mchunk-BCPKW6HO.js[39m[37m  [2m | [22m[2mpost-form-component[22m      [2m | [22m [36m52.26 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-BIXCTYQG.js[39m[37m  [2m | [22m[2mdashboard-component[22m      [2m | [22m [36m41.75 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-WYXJH75K.js[39m[37m  [2m | [22m[2mposts-list-component[22m     [2m | [22m [36m39.97 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-A2TSYMNE.js[39m[37m  [2m | [22m[2msocial-component[22m         [2m | [22m [36m38.08 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-ZWYPDU5Q.js[39m[37m  [2m | [22m[2musers-list-component[22m     [2m | [22m [36m35.10 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-UPHF5XMO.js[39m[37m  [2m | [22m[2mreports-component[22m        [2m | [22m [36m30.68 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-NKIFMKLP.js[39m[37m  [2m | [22m[2manalytics-component[22m      [2m | [22m [36m28.57 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-AJTXNN4B.js[39m[37m  [2m | [22m[2muser-form-component[22m      [2m | [22m [36m28.23 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-E3K5XOUL.js[39m[37m  [2m | [22m[2mprofile-component[22m        [2m | [22m [36m24.31 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-BVI4RTDA.js[39m[37m  [2m | [22m[2msettings-component[22m       [2m | [22m [36m24.18 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-WLAEC7WG.js[39m[37m  [2m | [22m[2mshell-component[22m          [2m | [22m [36m23.43 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-JS3AKT7O.js[39m[37m  [2m | [22m[2mlogin-component[22m          [2m | [22m [36m19.71 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-XDQVSOXV.js[39m[37m  [2m | [22m[2mforgot-password-component[22m[2m | [22m [36m17.50 kB[39m[37m[2m | [22m[39m
+[37m[32[39m[37mmchunk-XID7FM3U.js[39m[37m  [2m | [22m[2mauth-routes[22m              [2m | [22m[36m561 bytes[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.895 seconds][39m
+[37m[39m
+[37mPage reload sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m                    [2m | [22m [1mRaw size[22m[39m
+[37m[32mstyles.css[39m[37m         [2m | [22m[2mstyles[22m                   [2m | [22m[36m400.30 kB[39m[37m[2m | [22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m                     [2m | [22m [36m15.01 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-2DHZRV5Y.js[39m[37m  [2m | [22m[2m-[22m                        [2m | [22m [36m10.88 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-CZJLB7T5.js[39m[37m  [2m | [22m[2m-[22m                        [2m | [22m  [36m1.08 kB[39m[37m[2m | [22m[39m
+[37m[32mpolyfills.js[39m[37m       [2m | [22m[2mpolyfills[22m                [2m | [22m [36m95 bytes[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1m [22m                  [2m | [22m[1mInitial total[22m            [2m | [22m[1m427.36 kB[22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m                    [2m | [22m [1mRaw size[22m[39m
+[37m[32mchunk-BCPKW6HO.js[39m[37m  [2m | [22m[2mpost-form-component[22m      [2m | [22m [36m52.26 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-BIXCTYQG.js[39m[37m  [2m | [22m[2mdashboard-component[22m      [2m | [22m [36m41.75 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-WYXJH75K.js[39m[37m  [2m | [22m[2mposts-list-component[22m     [2m | [22m [36m39.97 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-A2TSYMNE.js[39m[37m  [2m | [22m[2msocial-component[22m         [2m | [22m [36m38.08 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-ZWYPDU5Q.js[39m[37m  [2m | [22m[2musers-list-component[22m     [2m | [22m [36m35.10 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-UPHF5XMO.js[39m[37m  [2m | [22m[2mreports-component[22m        [2m | [22m [36m30.68 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-NKIFMKLP.js[39m[37m  [2m | [22m[2manalytics-component[22m      [2m | [22m [36m28.57 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-AJTXNN4B.js[39m[37m  [2m | [22m[2muser-form-component[22m      [2m | [22m [36m28.23 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-E3K5XOUL.js[39m[37m  [2m | [22m[2mprofile-component[22m        [2m | [22m [36m24.31 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-BVI4RT[39m[37mDA.js[39m[37m  [2m | [22m[2msettings-component[22m       [2m | [22m [36m24.18 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-WLAEC7WG.js[39m[37m  [2m | [22m[2mshell-component[22m          [2m | [22m [36m23.43 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-JS3AKT7O.js[39m[37m  [2m | [22m[2mlogin-component[22m          [2m | [22m [36m19.71 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-XDQVSOXV.js[39m[37m  [2m | [22m[2mforgot-password-component[22m[2m | [22m [36m17.50 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-XID7FM3U.js[39m[37m  [2m | [22m[2mauth-routes[22m              [2m | [22m[36m561 bytes[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.214 seconds][39m
+[37m[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m             [2m | [22m [1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m              [2m | [22m [36m15.01 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m             [2m | [22m [1mRaw size[22m[39m
+[37m[32mchunk-QCZ5ZAOO.js[39m[37m  [2m | [22m[2mregister-component[22m[2m | [22m [36m27.23 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-ZV7IY7YR.js[39m[37m  [2m | [22m[2mauth-routes[22m       [2m | [22m[36m733 bytes[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [1.655 seconds][39m
+[37m[39m
+[37mPage reload sent to client(s).[39m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[37m[1mInitial chunk files[22m[2m | [22m[1mNames[22m          [2m | [22m [1mRaw size[22m[39m
+[37m[32mmain.js[39m[37m            [2m | [22m[2mmain[22m           [2m | [22m [36m15.01 kB[39m[37m[2m | [22m[39m
+[37m[39m
+[37m[1mLazy chunk files[22m   [2m | [22m[1mNames[22m          [2m | [22m [1mRaw size[22m[39m
+[37m[32mchunk-BDOFEGZZ.js[39m[37m  [2m | [22m[2mlogin-component[22m[2m | [22m [36m20.39 kB[39m[37m[2m | [22m[39m
+[37m[32mchunk-MSKMIRDY.js[39m[37m  [2m | [22m[2mauth-routes[22m    [2m | [22m[36m733 bytes[39m[37m[2m | [22m[39m
+[37m[39m
+[37mApplication bundle generation complete. [0.745 seconds][39m
+[37m[39m
+[37mComponent update sent to client(s).[39m

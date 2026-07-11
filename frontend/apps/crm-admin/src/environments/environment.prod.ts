@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-api-domain.com/api',
+  apiUrl: 'http://crm-backend.toptentopic.com/',
   appName: 'CRM Social Media',
   appVersion: '1.0.0',
 };

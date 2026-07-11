@@ -1,0 +1,171 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center"
+     style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);">
+
+  <!-- Background decoration -->
+  <div style="position:fixed;inset:0;overflow:hidden;pointer-events:none;">
+    <div style="position:absolute;top:-20%;right:-10%;width:600px;height:600px;
+                background:radial-gradient(circle,rgba(99,102,241,0.15) 0%,transparent 70%);
+                border-radius:50%;"></div>
+    <div style="position:absolute;bottom:-20%;left:-10%;width:500px;height:500px;
+                background:radial-gradient(circle,rgba(139,92,246,0.1) 0%,transparent 70%);
+                border-radius:50%;"></div>
+  </div>
+
+  <div class="container-fluid py-4" style="max-width:480px;z-index:1;">
+    <div class="card border-0 shadow-lg" style="border-radius:20px;background:rgba(17,24,39,0.9);backdrop-filter:blur(20px);">
+      <div class="card-body p-4 p-md-5">
+
+        <!-- Logo -->
+        <div class="text-center mb-4">
+          <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+               style="width:60px;height:60px;background:linear-gradient(135deg,#6366f1,#8b5cf6);
+                      border-radius:16px;box-shadow:0 8px 24px rgba(99,102,241,0.4);">
+            <i class="bi bi-person-plus text-white" style="font-size:26px;"></i>
+          </div>
+          <h1 style="font-size:22px;font-weight:800;color:#f1f5f9;margin-bottom:4px;">Create Account</h1>
+          <p style="font-size:13px;color:#64748b;">Join CRM Social Media today</p>
+        </div>
+
+        <!-- Error Alert -->
+        @if (errorMsg()) {
+          <div class="alert d-flex align-items-center gap-2 mb-4"
+               style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#f87171;font-size:13px;">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            {{ errorMsg() }}
+          </div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+
+          <!-- Full Name -->
+          <div class="mb-3">
+            <label class="form-label" style="color:#94a3b8;font-size:13px;">Full Name</label>
+            <div class="input-group">
+              <span class="input-group-text"
+                    style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-right:none;color:#64748b;">
+                <i class="bi bi-person"></i>
+              </span>
+              <input type="text"
+                     formControlName="name"
+                     id="reg-name"
+                     class="form-control"
+                     placeholder="John Doe"
+                     autocomplete="name"
+                     style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-left:none;color:#f1f5f9;"
+                     [class.is-invalid]="name.invalid && name.touched">
+            </div>
+            @if (name.hasError('required') && name.touched) {
+              <div class="d-block mt-1" style="color:#f87171;font-size:12px;">Full name is required.</div>
+            } @else if (name.hasError('minlength') && name.touched) {
+              <div class="d-block mt-1" style="color:#f87171;font-size:12px;">Name must be at least 2 characters.</div>
+            }
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label" style="color:#94a3b8;font-size:13px;">Email Address</label>
+            <div class="input-group">
+              <span class="input-group-text"
+                    style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-right:none;color:#64748b;">
+                <i class="bi bi-envelope"></i>
+              </span>
+              <input type="email"
+                     formControlName="email"
+                     id="reg-email"
+                     class="form-control"
+                     placeholder="admin@example.com"
+                     autocomplete="email"
+                     style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-left:none;color:#f1f5f9;"
+                     [class.is-invalid]="email.invalid && email.touched">
+            </div>
+            @if (email.hasError('required') && email.touched) {
+              <div class="d-block mt-1" style="color:#f87171;font-size:12px;">Email is required.</div>
+            } @else if (email.hasError('email') && email.touched) {
+              <div class="d-block mt-1" style="color:#f87171;font-size:12px;">Enter a valid email address.</div>
+            }
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label class="form-label" style="color:#94a3b8;font-size:13px;">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"
+                    style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-right:none;color:#64748b;">
+                <i class="bi bi-lock"></i>
+              </span>
+              <input [type]="showPassword() ? 'text' : 'password'"
+                     formControlName="password"
+                     id="reg-password"
+                     class="form-control"
+                     placeholder="Min 8 characters"
+                     autocomplete="new-password"
+                     style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-left:none;border-right:none;color:#f1f5f9;"
+                     [class.is-invalid]="password.invalid && password.touched">
+              <button type="button" class="input-group-text" (click)="showPassword.set(!showPassword())"
+                      style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-left:none;color:#64748b;cursor:pointer;">
+                <i class="bi" [class.bi-eye]="!showPassword()" [class.bi-eye-slash]="showPassword()"></i>
+              </button>
+            </div>
+            @if (password.hasError('required') && password.touched) {
+              <div class="d-block mt-1" style="color:#f87171;font-size:12px;">Password is required.</div>
+            } @else if (password.hasError('minlength') && password.touched) {
+              <div class="d-block mt-1" style="color:#f87171;font-size:12px;">Password must be at least 8 characters.</div>
+            }
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="mb-4">
+            <label class="form-label" style="color:#94a3b8;font-size:13px;">Confirm Password</label>
+            <div class="input-group">
+              <span class="input-group-text"
+                    style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-right:none;color:#64748b;">
+                <i class="bi bi-shield-lock"></i>
+              </span>
+              <input [type]="showConfirm() ? 'text' : 'password'"
+                     formControlName="password_confirmation"
+                     id="reg-confirm"
+                     class="form-control"
+                     placeholder="Repeat your password"
+                     autocomplete="new-password"
+                     style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-left:none;border-right:none;color:#f1f5f9;"
+                     [class.is-invalid]="confirm.touched && (confirm.hasError('required') || form.hasError('passwordMismatch'))">
+              <button type="button" class="input-group-text" (click)="showConfirm.set(!showConfirm())"
+                      style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-left:none;color:#64748b;cursor:pointer;">
+                <i class="bi" [class.bi-eye]="!showConfirm()" [class.bi-eye-slash]="showConfirm()"></i>
+              </button>
+            </div>
+            @if (confirm.hasError('required') && confirm.touched) {
+              <div class="d-block mt-1" style="color:#f87171;font-size:12px;">Please confirm your password.</div>
+            } @else if (form.hasError('passwordMismatch') && confirm.touched) {
+              <div class="d-block mt-1" style="color:#f87171;font-size:12px;">Passwords do not match.</div>
+            }
+          </div>
+
+          <!-- Submit -->
+          <button type="submit"
+                  id="btn-register"
+                  class="btn btn-primary w-100 mb-3"
+                  style="height:44px;font-size:14px;font-weight:600;border-radius:10px;
+                         background:linear-gradient(135deg,#6366f1,#8b5cf6);border:none;"
+                  [disabled]="loading()">
+            @if (loading()) {
+              <span class="spinner-border spinner-border-sm me-2"></span>
+              Creating account...
+            } @else {
+              <i class="bi bi-person-check me-2"></i>
+              Create Account
+            }
+          </button>
+
+          <!-- Login link -->
+          <p class="text-center mb-0" style="font-size:13px;color:#64748b;">
+            Already have an account?
+            <a routerLink="/auth/login" style="color:#6366f1;text-decoration:none;font-weight:600;"> Sign In</a>
+          </p>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

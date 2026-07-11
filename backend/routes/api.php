@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 // ──────────────────────────────────────────────────────────────────────────
 Route::middleware('throttle:10,1')->group(function () {
     Route::post('/login',    [AuthController::class, 'login'])->name('auth.login');
+    Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
 });
 
 // ──────────────────────────────────────────────────────────────────────────

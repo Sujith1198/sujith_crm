@@ -7,6 +7,11 @@ export const authRoutes: Routes = [
     title: 'Login — CRM Social Media',
   },
   {
+    path: 'register',
+    loadComponent: () => import('./register/register.component').then(m => m.RegisterComponent),
+    title: 'Create Account — CRM Social Media',
+  },
+  {
     path: 'forgot-password',
     loadComponent: () => import('./forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
     title: 'Forgot Password',

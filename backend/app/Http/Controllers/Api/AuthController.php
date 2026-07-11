@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
@@ -17,7 +18,37 @@ class AuthController extends Controller
 {
     public function __construct(protected AuthService $authService)
     {
-        $this->middleware('auth:api')->except(['login']);
+        $this->middleware('auth:api')->except(['login', 'register']);
+    }
+
+    /**
+     * POST /api/register
+     * Create a new account. Returns JWT token + user (auto-login).
+     */
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        try {
+            $result = $this->authService->register(
+                data: $request->only('name', 'email', 'password', 'password_confirmation'),
+                ip:   $request->ip(),
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Account created successfully.',
+                'data'    => [
+                    'token'      => $result['token'],
+                    'token_type' => $result['token_type'],
+                    'expires_in' => $result['expires_in'],
+                    'user'       => new UserResource($result['user']),
+                ],
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], $e->getCode() ?: 422);
+        }
     }
 
     /**

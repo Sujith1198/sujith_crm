@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\ActivityLogService;
@@ -10,7 +11,7 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 /**
  * AuthService
- * Handles login, logout, token refresh, and password reset flows.
+ * Handles registration, login, logout, token refresh, and password reset flows.
  */
 class AuthService
 {
@@ -18,6 +19,42 @@ class AuthService
         protected UserRepositoryInterface $userRepository,
         protected ActivityLogService $activityLogService,
     ) {}
+
+    /**
+     * Register a new user account and return a JWT token.
+     */
+    public function register(array $data, string $ip): array
+    {
+        $user = $this->userRepository->create([
+            'name'     => $data['name'],
+            'email'    => $data['email'],
+            'password' => Hash::make($data['password']),
+            'status'   => 'active',
+        ]);
+
+        // Assign default 'manager' role (or 'admin' if first user)
+        $defaultRole = Role::where('slug', 'manager')->first()
+                    ?? Role::where('slug', 'admin')->first();
+        if ($defaultRole) {
+            $user->roles()->attach($defaultRole->id);
+        }
+
+        $token = JWTAuth::fromUser($user);
+
+        $this->activityLogService->log(
+            action: 'auth.register',
+            description: "New user registered: {$user->email}",
+            userId: $user->id,
+            ip: $ip,
+        );
+
+        return [
+            'token'      => $token,
+            'token_type' => 'Bearer',
+            'expires_in' => config('jwt.ttl') * 60,
+            'user'       => $user->load('roles.permissions'),
+        ];
+    }
 
     /**
      * Attempt login and return JWT token + user data.
