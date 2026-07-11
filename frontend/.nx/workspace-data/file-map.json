@@ -60,184 +60,152 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/package.json",
-        "hash": "8630294688235076505"
+        "file": "libs/guards/src/index.ts",
+        "hash": "17693618467835326997"
       },
       {
-        "file": ".nx/workspace-data/source-maps.json",
-        "hash": "7013233057022113915"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/@angular_core.js.map",
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/@angular_common_http.js.map",
         "hash": "9947606979680686569"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/.tsbuildinfo",
-        "hash": "18042796396791710023"
-      },
-      {
-        "file": ".nx/workspace-data/400a7cab-1b82-4144-95e8-3bcc8d92a501.db-wal",
-        "hash": "5245092186248421084"
-      },
-      {
-        "file": ".nx/workspace-data/lockfile.hash",
-        "hash": "2464769298539705835"
-      },
-      {
-        "file": ".nx/cache/terminalOutputs/14312397237192567729",
-        "hash": "10821821821076736292"
-      },
-      {
-        "file": "package.json",
-        "hash": "11677855630602991193"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/rxjs_operators.js",
-        "hash": "343060196373289381"
-      },
-      {
-        "file": "libs/services/src/lib/user.service.ts",
-        "hash": "6326479292798972256"
-      },
-      {
-        "file": "libs/services/src/lib/post.service.ts",
-        "hash": "12857890615791704023"
-      },
-      {
-        "file": "package-lock.json",
-        "hash": "16082449960732873002"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/angular-compiler.db-lock",
-        "hash": "13393129594790954314"
-      },
-      {
-        "file": ".nx/workspace-data/400a7cab-1b82-4144-95e8-3bcc8d92a501.db-shm",
-        "hash": "18212472008531303670"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_ssr_temp_53bead59/package.json",
-        "hash": "8630294688235076505"
-      },
-      {
-        "file": ".nx/workspace-data/project-graph.json",
-        "hash": "3337357735520219786"
       },
       {
         "file": "libs/interceptors/src/index.ts",
         "hash": "10925108239355665548"
       },
       {
-        "file": ".nx/workspace-data/parsed-lock-file.json",
-        "hash": "4845315019758709630"
+        "file": "libs/services/src/lib/post.service.ts",
+        "hash": "12857890615791704023"
       },
       {
-        "file": ".nx/workspace-data/file-map.json",
-        "hash": "10148790766941692654"
-      },
-      {
-        "file": "libs/services/src/lib/auth.service.ts",
-        "hash": "10532113295022931666"
-      },
-      {
-        "file": ".nx/cache/run.json",
-        "hash": "6384831403473658937"
-      },
-      {
-        "file": "libs/models/src/index.ts",
-        "hash": "2795796531828846649"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/rxjs.js",
-        "hash": "11272006836536540774"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/chunk-N7FUD4WF.js.map",
-        "hash": "3774377284962065274"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/@angular_router.js",
-        "hash": "715723993477802326"
-      },
-      {
-        "file": "libs/guards/src/index.ts",
-        "hash": "17693618467835326997"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/@angular_forms.js",
-        "hash": "8337755008281261957"
-      },
-      {
-        "file": "libs/services/src/index.ts",
-        "hash": "13656159250536595969"
-      },
-      {
-        "file": ".nx/workspace-data/d/daemon.log",
-        "hash": "9350495806559743957"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/zone__js.js.map",
-        "hash": "13015539677990086732"
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_ssr_temp_19353a3a/_metadata.json",
+        "hash": "4109086077048125410"
       },
       {
         "file": ".angular/cache/20.0.6/crm-admin/vite/com.chrome.devtools.json",
-        "hash": "5542944804168551756"
+        "hash": "16385047267559944273"
       },
       {
-        "file": "tsconfig.base.json",
-        "hash": "12562598601456993418"
-      },
-      {
-        "file": "libs/guards/src/lib/auth.guard.ts",
-        "hash": "8502569676833648488"
-      },
-      {
-        "file": "libs/services/src/lib/analytics.service.ts",
-        "hash": "8602249169474046843"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/angular-compiler.db",
-        "hash": "11878440321361790560"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/@angular_common.js.map",
-        "hash": "9947606979680686569"
-      },
-      {
-        "file": "libs/services/src/lib/toast.service.ts",
-        "hash": "18024047192652010914"
-      },
-      {
-        "file": ".nx/cache/terminalOutputs/9638657484575413383",
-        "hash": "12851986422207068304"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/zone__js.js",
-        "hash": "12704328833797604064"
-      },
-      {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/rxjs.js.map",
-        "hash": "9947606979680686569"
-      },
-      {
-        "file": "libs/interceptors/src/lib/jwt.interceptor.ts",
-        "hash": "3264103955441889372"
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/chunk-ZWUTCB76.js",
+        "hash": "6128015370650004412"
       },
       {
         "file": "nx.json",
         "hash": "5868756940117615350"
       },
       {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/chunk-WDMUDEB6.js",
+        "file": "package.json",
+        "hash": "11677855630602991193"
+      },
+      {
+        "file": ".nx/workspace-data/source-maps.json",
+        "hash": "7013233057022113915"
+      },
+      {
+        "file": ".nx/workspace-data/400a7cab-1b82-4144-95e8-3bcc8d92a501.db-wal",
+        "hash": "1141735175400519995"
+      },
+      {
+        "file": ".nx/workspace-data/project-graph.json",
+        "hash": "13592717569631699794"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_ssr_temp_19353a3a/package.json",
+        "hash": "8630294688235076505"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/.tsbuildinfo",
+        "hash": "18174160194405679926"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/ng2-charts.js.map",
+        "hash": "3153037874926098"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/package.json",
+        "hash": "8630294688235076505"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/chunk-XJKSSPTD.js",
+        "hash": "61936598003464334"
+      },
+      {
+        "file": "libs/services/src/index.ts",
+        "hash": "13656159250536595969"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/ng2-charts.js",
+        "hash": "12176537477288212880"
+      },
+      {
+        "file": ".nx/workspace-data/file-map.json",
+        "hash": "8420920488365631881"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/@angular_forms.js.map",
+        "hash": "2423767020259288579"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "12562598601456993418"
+      },
+      {
+        "file": "libs/services/src/lib/analytics.service.ts",
+        "hash": "8602249169474046843"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/chunk-N7FUD4WF.js.map",
+        "hash": "3774377284962065274"
+      },
+      {
+        "file": "libs/guards/src/lib/auth.guard.ts",
+        "hash": "8502569676833648488"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/rxjs_operators.js.map",
+        "hash": "9947606979680686569"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/rxjs_operators.js",
+        "hash": "343060196373289381"
+      },
+      {
+        "file": "libs/services/src/lib/toast.service.ts",
+        "hash": "18024047192652010914"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/chunk-LR4O7BWK.js",
+        "hash": "9663866194005629499"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/@angular_router.js",
+        "hash": "715723993477802326"
+      },
+      {
+        "file": "libs/models/src/index.ts",
+        "hash": "2795796531828846649"
+      },
+      {
+        "file": "libs/services/src/lib/auth.service.ts",
+        "hash": "14097678211481521477"
+      },
+      {
+        "file": "libs/interceptors/src/lib/jwt.interceptor.ts",
+        "hash": "3264103955441889372"
+      },
+      {
+        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_7e90a790/chunk-WDMUDEB6.js",
         "hash": "6404267885737011678"
       },
       {
-        "file": ".nx/cache/terminalOutputs/10363179169480564987",
-        "hash": "38442096930089363"
+        "file": ".nx/workspace-data/400a7cab-1b82-4144-95e8-3bcc8d92a501.db-shm",
+        "hash": "1702200071136068239"
       },
       {
-        "file": ".angular/cache/20.0.6/crm-admin/vite/deps_temp_fc4af0ab/ng2-charts.js.map",
-        "hash": "3153037874926098"
+        "file": ".nx/workspace-data/d/daemon.log",
+        "hash": "13984555553310174435"
+      },
+      {
+        "file": "libs/services/src/lib/user.service.ts",
+        "hash": "1700342302611363901"
       }
     ],
     "projectFileMap": {
@@ -308,17 +276,11 @@
         },
         {
           "file": "apps/crm-admin/src/app/pages/auth/forgot-password/forgot-password.component.html",
-          "hash": "14079909928989026159"
+          "hash": "2212240720701709844"
         },
         {
           "file": "apps/crm-admin/src/app/pages/auth/forgot-password/forgot-password.component.ts",
-          "hash": "16431329422387385434",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/common",
-            "npm:@angular/router",
-            "npm:@angular/forms"
-          ]
+          "hash": "11880764044738781802"
         },
         {
           "file": "apps/crm-admin/src/app/pages/auth/login/login.component.html",
@@ -480,11 +442,11 @@
         },
         {
           "file": "apps/crm-admin/src/environments/environment.prod.ts",
-          "hash": "6856139363142863275"
+          "hash": "7819620797383080816"
         },
         {
           "file": "apps/crm-admin/src/environments/environment.ts",
-          "hash": "4469833533301035249"
+          "hash": "16183854970142810878"
         },
         {
           "file": "apps/crm-admin/src/index.html",
@@ -507,5 +469,4 @@
         }
       ]
     }
-  }
-}
+  

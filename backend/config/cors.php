@@ -15,6 +15,8 @@ return [
     'allowed_methods'          => ['*'],
     'allowed_origins'          => [
         env('FRONTEND_URL', 'http://localhost:4200'),
+        'http://crm.toptentopic.com',
+        'https://crm.toptentopic.com',
     ],
     'allowed_origins_patterns' => [],
     'allowed_headers'          => ['*'],
